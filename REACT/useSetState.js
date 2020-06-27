@@ -4,7 +4,7 @@
 
 import { useState } from 'react';
 
-const useSetState = (initialState) =>{
+const setPartialState = (initialState) =>{
     const [state, set] = useState(initialState);
     const setPartialState = (part) => {
         Object.assign(state, part);
