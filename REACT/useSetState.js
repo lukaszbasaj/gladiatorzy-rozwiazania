@@ -2,15 +2,15 @@
 // odtworzysz możliwość zmiany state przez częściowe nadpisanie
 // (identyczne działanie jak to co ma this.setState)
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
-const setPartialState = (initialState) =>{
+const setPartialState = (initialState) => {
     const [state, set] = useState(initialState);
-    const setPartialState = (part) => {
-        Object.assign(state, part);
-        set(state);
-    };
-
+    const setPartialState = useCallback((part) => {
+        set((prevState) => Object.assign({}, prevState, part instanceof Function ? part(prevState) : part));
+        },
+    [set]
+    );
     return [state, setPartialState];
 };
 
